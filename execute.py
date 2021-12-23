@@ -338,13 +338,13 @@ def qualify_pages (df, returnme = True, lp=landingpages):
         copy=False,
         indicator=True
     )['_merge'] == 'both'
-    df['banners_seen'] = df.groupby(['user_id'])['bi_iswlm'].cumsum().fillna(method='ffill').astype('int')
+    df['banners_seen'] = df.groupby(['user_id'])['bi_iswlm'].cumsum().fillna(method='ffill').fillna(0).astype('int')
     df.loc[df['banners_seen'] > banner_view_cap,'banners_seen'] = banner_view_cap
-    df['landing_seen'] = df.groupby(['user_id'])['pg_landing'].cumsum().fillna(method='ffill').astype('int')
+    df['landing_seen'] = df.groupby(['user_id'])['pg_landing'].cumsum().fillna(method='ffill').fillna(0).astype('int')
     df.loc[df['landing_seen'] > landing_view_cap,'landing_seen'] = landing_view_cap
-    df['listpg_us_seen'] = df.groupby(['user_id'])['pg_list_us'].cumsum().fillna(method='ffill').astype('int')
+    df['listpg_us_seen'] = df.groupby(['user_id'])['pg_list_us'].cumsum().fillna(method='ffill').fillna(0).astype('int')
     df.loc[df['listpg_us_seen'] > listpg_seen_cap,'listpg_us_seen'] = listpg_seen_cap
-    df['listpg_de_seen'] = df.groupby(['user_id'])['pg_list_de'].cumsum().fillna(method='ffill').astype('int')
+    df['listpg_de_seen'] = df.groupby(['user_id'])['pg_list_de'].cumsum().fillna(method='ffill').fillna(0).astype('int')
     df.loc[df['listpg_de_seen'] > listpg_seen_cap,'listpg_de_seen'] = listpg_seen_cap
     if returnme:
         return(df)
